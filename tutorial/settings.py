@@ -9,6 +9,8 @@
 
 BOT_NAME = "tutorial"
 
+# SPIDER_MODULES = ["tutorials.tutorials.spiders"]
+# NEWSPIDER_MODULE = "tutorials.tutorials.spiders"
 SPIDER_MODULES = ["tutorial.spiders"]
 NEWSPIDER_MODULE = "tutorial.spiders"
 
@@ -45,13 +47,13 @@ ROBOTSTXT_OBEY = True
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 SPIDER_MIDDLEWARES = {
-   "tutorial.middlewares.TutorialSpiderMiddleware": 100,
+   # "tutorial.middlewares.TutorialSpiderMiddleware": 100,
 }
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-   "tutorial.middlewares.SeleniumMiddleware": 543,
+   # "tutorial.middlewares.SeleniumMiddleware": 543,
 }
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -61,9 +63,9 @@ DOWNLOADER_MIDDLEWARES = {
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
+# ITEM_PIPELINES = {
 #    "tutorial.pipelines.TutorialPipeline": 300,
-#}
+# }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
