@@ -15,7 +15,6 @@ class CustomMonth(Enum):
     November = ("November", 11)
     December = ("December", 12)
 
-
     @classmethod
     def getEnumMonth(cls, month: str):
         J1 = "January"
