@@ -4,23 +4,35 @@ import datetime as dt
 import scrapy
 from scrapy.http.request import Request
 
-from ..items.DanceSchedule import DanceSchedule
-from ..items.Dancer import Dancer
 from ..items.CustomMonth import CustomMonth
+from ..items.DancerItem import DancerItem
+from ..items.DancerScheduleItem import DancerScheduleItem
 
 
 class YGXScheduleSpider(scrapy.Spider):
     name = "ygx"
     result = []
+    custom_settings = {
+        'DOWNLOADER_MIDDLEWARES': {
+            'tutorial.middlewares.SeleniumMiddleware': 100
+        },
+        'ITEM_PIPELINES': {
+            'tutorial.pipelines.YGXPipeline': 300,
+        }
+    }
 
     def __init__(self, *args, **kwargs):
-        self.start_urls = ["https://www.ygx.co.kr/schedule/calendar.php"]
+        self.start_urls = [
+            "https://www.ygx.co.kr/schedule/calendar.php",
+            "https://www.ygx.co.kr/schedule/calendar.php"
+        ]
 
     def start_requests(self) -> Iterable[Request]:
         for url in self.start_urls:
-            yield scrapy.Request(url=url, callback=self.parse, method="GET", encoding="utf-8")
+            yield scrapy.Request(url=url, callback=self.parse, method="GET", encoding="utf-8", dont_filter=True)
 
     def parse(self, response):
+        today = dt.date.today()
         monthResponse: str = response.xpath('//*[@id="sub_contents"]/div/div/div/div/div[1]/em[1]/text()').get()
         currentMonth: CustomMonth = CustomMonth.getEnumMonth(month=monthResponse)
 
@@ -50,19 +62,24 @@ class YGXScheduleSpider(scrapy.Spider):
                         name = lesson.xpath('p/text()').get().strip()
                         classLevel = lesson.xpath('span/text()').get().strip()
 
-                        dancerTemp = Dancer(name=name, enterprise="ygx")
                         date = dt.date(year=2024, month=currentMonth.value[1], day=int(dayCount))
-                        danceSchedule = DanceSchedule(
-                            dancer=dancerTemp,
-                            scheduleDate=date,
-                            scheduleDay=date.weekday(),
-                            scheduleTime=time,
-                            classLevel=classLevel,
-                            genre="CHOREOGRAPHER"
-                        )
 
-                        self.result.append(danceSchedule)
+                        dancers = []
 
-        print(len(self.result))
+                        dancerItem = DancerItem()
+                        dancerItem["name"] = name
 
+                        dancers.append(dancerItem)
+
+                        dancerScheduleItem = DancerScheduleItem()
+                        dancerScheduleItem["dancers"] = dancers
+                        dancerScheduleItem["scheduleDate"] = date.strftime("%Y-%m-%d")
+                        dancerScheduleItem["scheduleDay"] = date.weekday()
+                        dancerScheduleItem["startTime"] = time
+                        # dancerScheduleItem["endTime"] = endTime
+                        dancerScheduleItem["classLevel"] = classLevel
+                        dancerScheduleItem["enterprise"] = "YGX"
+
+                        if today <= date:
+                            yield dancerScheduleItem
 
