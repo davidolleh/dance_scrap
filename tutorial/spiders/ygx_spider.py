@@ -50,7 +50,14 @@ class YGXScheduleSpider(scrapy.Spider):
 
                 lessonsTimes = d.xpath('div/div/div/div[contains(@class, "time_wrap")]')
                 for lessonsTime in lessonsTimes:
-                    time = lessonsTime.xpath('b/text()').get().strip()
+
+                    startTimeStr = lessonsTime.xpath('b/text()').get().strip()
+                    splitTime = startTimeStr.split(":")
+                    startTimeDateTime = dt.datetime(year=2024, month=1, day=1, hour=int(splitTime[0]),
+                                                    minute=int(splitTime[1]))
+                    endTimeDateTime = startTimeDateTime + dt.timedelta(hours=1, minutes=40)
+                    endTimeStr = endTimeDateTime.strftime("%H:%M")
+
                     lessons = lessonsTime.xpath('div[contains(@class, "class_box")]')
                     for lesson in lessons:
                         classLevel = lesson.xpath("@class").get()
@@ -75,8 +82,8 @@ class YGXScheduleSpider(scrapy.Spider):
                         dancerScheduleItem["dancers"] = dancers
                         dancerScheduleItem["scheduleDate"] = date.strftime("%Y-%m-%d")
                         dancerScheduleItem["scheduleDay"] = date.weekday()
-                        dancerScheduleItem["startTime"] = time
-                        # dancerScheduleItem["endTime"] = endTime
+                        dancerScheduleItem["startTime"] = startTimeStr
+                        dancerScheduleItem["endTime"] = endTimeStr
                         dancerScheduleItem["classLevel"] = classLevel
                         dancerScheduleItem["enterprise"] = "YGX"
 
