@@ -18,6 +18,9 @@ class OneMillionScheduleSpider(scrapy.Spider):
         },
         'ITEM_PIPELINES': {
            'tutorial.pipelines.OneMillionPipeline': 300,
+        },
+        'SPIDER_MIDDLEWARES': {
+            "tutorial.middlewares.TutorialSpiderMiddleware": 100,
         }
     }
 
@@ -45,6 +48,7 @@ class OneMillionScheduleSpider(scrapy.Spider):
 
             for index, dayInfoR in enumerate(daysInfoR):
                 countR = dayInfoR.xpath('./div[@class="schdm-col-header"]')
+
                 if len(countR) < 1:
                     continue
 
@@ -53,9 +57,12 @@ class OneMillionScheduleSpider(scrapy.Spider):
 
                 dayLessonsR = dayInfoR.xpath('./div[@class="schdm-col-body"]/div')
 
+                if len(dayLessonsR) < 1:
+                    continue
+
                 for dayLessonR in dayLessonsR:
                     isCollaboration = False
-                    collaborationR = dayLessonR.xpath('./div[2]/text()').get()
+                    collaborationR = dayLessonR.xpath('./div[@class="name"]/text()').get()
                     if collaborationR == 'Collaboration':
                         isCollaboration = True
 
@@ -73,6 +80,8 @@ class OneMillionScheduleSpider(scrapy.Spider):
 
                     dancers = []
 
+
+
                     if isCollaboration:
                         name = name.splitlines()
                         dancer1 = DancerItem()
@@ -81,6 +90,21 @@ class OneMillionScheduleSpider(scrapy.Spider):
                         dancer2 = DancerItem()
                         dancer2["name"] = name[1]
                         dancers.append(dancer2)
+                    elif self._checkIsCollaboration(name):
+                        if " X " in name:
+                            names = name.split(" X ")
+                        elif " x " in name:
+                            names = name.split(" x ")
+                        else:
+                            names = name.split(" & ")
+
+                        dancer1 = DancerItem()
+                        dancer1["name"] = names[0]
+                        dancers.append(dancer1)
+                        dancer2 = DancerItem()
+                        dancer2["name"] = names[1]
+                        dancers.append(dancer2)
+
                     else:
                         dancerItem = DancerItem()
                         dancerItem["name"] = name
@@ -115,3 +139,13 @@ class OneMillionScheduleSpider(scrapy.Spider):
             temp = endTime.split(":")
             endTime = str(int(temp[0]) + 12) + ':' + temp[1]
         return startTime, endTime
+
+    def _checkIsCollaboration(self, name):
+        if " X " in name:
+            return True
+        elif " & " in name:
+            return True
+        elif " x " in name:
+            return True
+        else:
+            return False
