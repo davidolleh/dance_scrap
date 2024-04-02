@@ -11,21 +11,32 @@ from tutorial.spiders.oneMillion_spider import OneMillionScheduleSpider
 from tutorial.spiders.ygx_spider import YGXScheduleSpider
 
 result = []
+isExcepted = [False]
 
 
 def _item_passed(item):
     result.append(item)
 
 
+def _checkException():
+    isExcepted[0] = True
+
+
 #
 settings = get_project_settings()
 process = CrawlerProcess(settings)
 dispatcher.connect(_item_passed, signals.item_passed)
+dispatcher.connect(_checkException, signals.spider_error)
 
-process.crawl(OneMillionScheduleSpider)
-process.crawl(YGXScheduleSpider)
+try:
+    process.crawl(OneMillionScheduleSpider)
+    process.crawl(YGXScheduleSpider)
+    process.start()
+except Exception as ex:
+    raise Exception()
 
-process.start()
+if isExcepted[0]:
+    raise Exception("crawled failed!")
 
 today = str(dt.date.today().day)
 file = open("items_" + today + ".json", "w")
@@ -40,4 +51,3 @@ for index, item in enumerate(result):
         file.write(line)
 
 file.write("]")
-

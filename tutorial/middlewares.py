@@ -195,11 +195,9 @@ class OneMillionMiddleWare(object):
         # self.driver.implicitly_wait(time_to_wait=20)
         self.driver.get(request.url)
         if "1milliondance.com/schedule" in request.url:
-            print('wait!!')
             wait.until(
                 EC.presence_of_element_located((By.XPATH, '//*[@id="monthYear_0"]/ul[3]/li[2]'))
             )
-            print('wait finished!!')
         # sleep(3)
 
         if request.url in self.url:
@@ -256,11 +254,7 @@ class TutorialSpiderMiddleware:
             yield i
 
     def process_spider_exception(self, response, exception, spider):
-        # Called when a spider or process_spider_input() method
-        # (from other spider middleware) raises an exception.
-
-        # Should return either None or an iterable of Request or item objects.
-        pass
+        raise Exception("business error")
 
     def process_start_requests(self, start_requests, spider):
         # Called with the start requests of the spider, and works
