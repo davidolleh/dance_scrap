@@ -14,10 +14,13 @@ class YGXScheduleSpider(scrapy.Spider):
     result = []
     custom_settings = {
         'DOWNLOADER_MIDDLEWARES': {
-            'tutorial.middlewares.SeleniumMiddleware': 100
+            'tutorial.middlewares.SeleniumMiddleware': 200
         },
         'ITEM_PIPELINES': {
             'tutorial.pipelines.YGXPipeline': 300,
+        },
+        'SPIDER_MIDDLEWARES': {
+            "tutorial.middlewares.TutorialSpiderMiddleware": 100,
         }
     }
 
