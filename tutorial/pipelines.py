@@ -30,3 +30,14 @@ class OneMillionPipeline(object):
 
     def close_spider(self, spider):
         spider.logger.info('Tutorial Spider Pipeline closed')
+
+class OFDPipeline(object):
+
+    def open_spider(self, spider):
+        spider.logger.info('Tutorial Spider Pipeline Started')
+
+    def process_item(self, item, spider):
+        return item
+
+    def close_spider(self, spider):
+        spider.logger.info('Tutorial Spider Pipeline closed')
