@@ -198,7 +198,9 @@ class OneMillionMiddleWare(object):
             wait.until(
                 EC.presence_of_element_located((By.XPATH, '//*[@id="monthYear_0"]/ul[3]/li[2]'))
             )
-        # sleep(3)
+
+        # TODO:: sleep 대신 다르게 기다리는 방법 찾아보기
+        sleep(3)
 
         if request.url in self.url:
             if "1milliondance.com/schedule" in request.url:
