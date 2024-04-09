@@ -7,6 +7,7 @@ from scrapy import signals
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 
+from tutorial.spiders.ofd_spider import OfdScheduleSpider
 from tutorial.spiders.oneMillion_spider import OneMillionScheduleSpider
 from tutorial.spiders.ygx_spider import YGXScheduleSpider
 
@@ -31,6 +32,7 @@ dispatcher.connect(_checkException, signals.spider_error)
 try:
     process.crawl(OneMillionScheduleSpider)
     process.crawl(YGXScheduleSpider)
+    process.crawl(OfdScheduleSpider)
     process.start()
 except Exception as ex:
     raise Exception()
