@@ -2,7 +2,7 @@ import datetime
 
 import scrapy
 
-from tutorial.items import DancerItem
+from showdown_crawl.items import DancerItem
 
 
 class DancerScheduleItem(scrapy.Item):

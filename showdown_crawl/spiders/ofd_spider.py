@@ -14,13 +14,13 @@ class OfdScheduleSpider(scrapy.Spider):
     name = "ofd"
     custom_settings = {
         'DOWNLOADER_MIDDLEWARES': {
-            'tutorial.middlewares.SeleniumMiddleware': 100
+            'showdown_crawl.middlewares.SeleniumMiddleware': 100
         },
         'ITEM_PIPELINES': {
-            'tutorial.pipelines.OFDPipeline': 300,
+            'showdown_crawl.pipelines.OFDPipeline': 300,
         },
         'SPIDER_MIDDLEWARES': {
-            "tutorial.middlewares.TutorialSpiderMiddleware": 100,
+            "showdown_crawl.middlewares.TutorialSpiderMiddleware": 100,
         }
     }
 

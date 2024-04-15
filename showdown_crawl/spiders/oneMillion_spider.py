@@ -14,13 +14,13 @@ class OneMillionScheduleSpider(scrapy.Spider):
     result = []
     custom_settings = {
         'DOWNLOADER_MIDDLEWARES': {
-            'tutorial.middlewares.OneMillionMiddleWare': 100
+            'showdown_crawl.middlewares.OneMillionMiddleWare': 100
         },
         'ITEM_PIPELINES': {
-           'tutorial.pipelines.OneMillionPipeline': 300,
+           'showdown_crawl.pipelines.OneMillionPipeline': 300,
         },
         'SPIDER_MIDDLEWARES': {
-            "tutorial.middlewares.TutorialSpiderMiddleware": 100,
+            "showdown_crawl.middlewares.TutorialSpiderMiddleware": 100,
         }
     }
 

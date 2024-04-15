@@ -1,4 +1,4 @@
-# Scrapy settings for tutorial project
+# Scrapy settings for showdown_crawl project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -7,16 +7,16 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = "tutorial"
+BOT_NAME = "showdown_crawl"
 
 # SPIDER_MODULES = ["tutorials.tutorials.spiders"]
 # NEWSPIDER_MODULE = "tutorials.tutorials.spiders"
-SPIDER_MODULES = ["tutorial.spiders"]
-NEWSPIDER_MODULE = "tutorial.spiders"
+SPIDER_MODULES = ["showdown_crawl.spiders"]
+NEWSPIDER_MODULE = "showdown_crawl.spiders"
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = "tutorial (+http://www.yourdomain.com)"
+#USER_AGENT = "showdown_crawl (+http://www.yourdomain.com)"
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -47,13 +47,13 @@ ROBOTSTXT_OBEY = True
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 SPIDER_MIDDLEWARES = {
-   # "tutorial.middlewares.TutorialSpiderMiddleware": 100,
+   # "showdown_crawl.middlewares.TutorialSpiderMiddleware": 100,
 }
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-   # "tutorial.middlewares.SeleniumMiddleware": 543,
+   # "showdown_crawl.middlewares.SeleniumMiddleware": 543,
 }
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -64,7 +64,7 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 # ITEM_PIPELINES = {
-#    "tutorial.pipelines.TutorialPipeline": 300,
+#    "showdown_crawl.pipelines.TutorialPipeline": 300,
 # }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

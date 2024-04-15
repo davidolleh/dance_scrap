@@ -7,9 +7,9 @@ from scrapy import signals
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 
-from tutorial.spiders.ofd_spider import OfdScheduleSpider
-from tutorial.spiders.oneMillion_spider import OneMillionScheduleSpider
-from tutorial.spiders.ygx_spider import YGXScheduleSpider
+from showdown_crawl.spiders.ofd_spider import OfdScheduleSpider
+from showdown_crawl.spiders.oneMillion_spider import OneMillionScheduleSpider
+from showdown_crawl.spiders.ygx_spider import YGXScheduleSpider
 
 result = []
 isExcepted = [False]
