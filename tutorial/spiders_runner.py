@@ -41,7 +41,7 @@ if isExcepted[0]:
     raise Exception("crawled failed!")
 
 today = str(dt.date.today().day)
-file = open("items_" + today + ".json", "w")
+file = open("lessons_" + today + ".json", "w")
 file.write("[" + "\n")
 size = len(result) - 1
 for index, item in enumerate(result):
