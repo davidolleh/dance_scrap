@@ -3,14 +3,18 @@ name = "scrapy-tutorial"
 version = "0.1.0"
 description = ""
 authors = ["hwang seung joon <asherolleh@gmail.com>"]
-readme = "README.md"
+packages = [
+    { include = "showdown_crawl"},
+    { include = "spiders", from="showdown_crawl"},
+    { include = "items", from="showdown_crawl"},
+]
+
 
 [tool.poetry.dependencies]
 python = "^3.12"
 scrapy = "^2.11.0"
 selenium = "^4.17.2"
 webdriver-manager = "^4.0.1"
-
 
 [build-system]
 requires = ["poetry-core"]
