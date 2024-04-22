@@ -14,7 +14,7 @@ class YGXScheduleSpider(scrapy.Spider):
     result = []
     custom_settings = {
         'DOWNLOADER_MIDDLEWARES': {
-            'showdown_crawl.middlewares.SeleniumMiddleware': 200
+            'showdown_crawl.middlewares.YGXMiddleware': 200
         },
         'ITEM_PIPELINES': {
             'showdown_crawl.pipelines.YGXPipeline': 300,

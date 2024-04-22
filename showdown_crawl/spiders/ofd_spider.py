@@ -14,7 +14,7 @@ class OfdScheduleSpider(scrapy.Spider):
     name = "ofd"
     custom_settings = {
         'DOWNLOADER_MIDDLEWARES': {
-            'showdown_crawl.middlewares.SeleniumMiddleware': 100
+            'showdown_crawl.middlewares.OFDMiddleware': 100
         },
         'ITEM_PIPELINES': {
             'showdown_crawl.pipelines.OFDPipeline': 300,
