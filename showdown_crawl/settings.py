@@ -12,7 +12,8 @@ BOT_NAME = "showdown_crawl"
 SPIDER_MODULES = ["showdown_crawl.spiders"]
 NEWSPIDER_MODULE = "showdown_crawl.spiders"
 
-LOG_LEVEL = "ERROR"
+LOG_LEVEL = "WARNING"
+LOG_FILE = "log.txt"
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
