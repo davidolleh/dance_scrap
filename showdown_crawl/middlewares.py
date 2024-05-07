@@ -50,7 +50,6 @@ class YGXMiddleware(object):
         self.logger.warning("request!: %s" % request.url)
         self.driver.get(request.url)
         self.logger.warning("request done: %s" % request.url)
-        self.logger.warning(self.driver.page_source)
 
 
         self.logger.warning("waiting for element loaded %s" % request.url)
@@ -89,7 +88,7 @@ class OFDMiddleware(object):
         return middleware
 
     def spider_opened(self, spider):
-        self.driver = WebDriver().driver
+        self.driver = WebDriver(False).driver
         self.wait = WebDriverWait(self.driver, timeout=300)
         self.logger = logging.getLogger()
         spider.logger.info("Spider opened: %s" % spider.name)
@@ -110,7 +109,6 @@ class OFDMiddleware(object):
         self.driver.get(request.url)
         self.logger.warning("request done!: %s" % request.url)
 
-        self.logger.warning(self.driver.page_source)
         # time.sleep(3)
         try:
             self.logger.warning("waiting for info")
@@ -147,7 +145,7 @@ class OneMillionMiddleWare(object):
 
     def spider_opened(self, spider):
         # 언제 이 함수가 작동되는 지 알기 매 request마다 아니면 spider를 실행할 때 한번?
-        self.driver = WebDriver().driver
+        self.driver = WebDriver(True).driver
         self.wait = WebDriverWait(self.driver, timeout=120)
         self.logger = logging.getLogger()
 
@@ -162,9 +160,14 @@ class OneMillionMiddleWare(object):
     def process_request(self, request, spider):
 
         if "robots.txt" in request.url:
-            self.logger.warning(request.url)
             return
 
+        self.driver.execute_script("""
+            var style = document.createElement('style');
+            style.type = 'text/css';
+            style.innerHTML = 'body { visibility: hidden !important; }';
+            document.head.appendChild(style);
+        """)
         try:
             self.logger.warning("request!: %s" % request.url)
             self.driver.get(request.url)
